@@ -35,6 +35,8 @@ public class AsignaturaController {
         model.addAttribute("promedioGeneral", calcularPromedioGeneral(lista));
         return "listaAsignaturas";
     }
+
+    // --- GUARDAR (CORREGIDO CON VALIDACIÓN 0-10) ---
     @PostMapping("/guardar")
     public String guardar(@RequestParam String nombre, 
                           @RequestParam String tipo, 
@@ -46,24 +48,35 @@ public class AsignaturaController {
 
         // 1. Crear la instancia según el tipo
         Asignatura nueva = tipo.equalsIgnoreCase("obligatoria") 
-                           ? new Obligatoria(nombre) 
-                           : new Optativa(nombre);
+                            ? new Obligatoria(nombre) 
+                            : new Optativa(nombre);
 
-        // 2. Procesar el String de notas (ej: "7.5, 8, 4.3") a List<Double>
+        // 2. Procesar el String de notas (ej: "7.5, 30, -2")
         List<Double> listaNotas = new ArrayList<>();
         if (notasString != null && !notasString.trim().isEmpty()) {
             try {
+                // Dividimos por comas
                 String[] partes = notasString.split(",");
                 for (String p : partes) {
-                    listaNotas.add(Double.parseDouble(p.trim()));
+                    String limpia = p.trim();
+                    if (!limpia.isEmpty()) {
+                        // Convertimos a número (manejando puntos o comas decimales)
+                        double valor = Double.parseDouble(limpia.replace(",", "."));
+                        
+                        // VALIDACIÓN ESTRICTA: Si es mayor a 10, lo bajamos a 10. Si es menor a 0, lo subimos a 0.
+                        if (valor > 10) valor = 10.0;
+                        if (valor < 0) valor = 0.0;
+                        
+                        listaNotas.add(valor);
+                    }
                 }
             } catch (NumberFormatException e) {
-                // Error de formato
-                System.out.println("Error convirtiendo notas: " + e.getMessage());
+                System.out.println("Error de formato en notas: " + e.getMessage());
+                // Podrías redirigir con un error: return "redirect:/asignaturas/nueva?error";
             }
         }
 
-        // 3. Asignar datos y guardar
+        // 3. Asignar datos y guardar en la BD de Clever Cloud
         nueva.setNotas(listaNotas);
         nueva.setUsuario(usuario);
         asignaturaRepository.save(nueva);
@@ -101,7 +114,7 @@ public class AsignaturaController {
         return "listaAsignaturas";
     }
 
-    // --- OTROS MÉTODOS ---
+    // --- FORMULARIOS Y DETALLES ---
     @GetMapping("/nueva")
     public String mostrarFormularioNueva() {
         return "nuevaAsignatura";

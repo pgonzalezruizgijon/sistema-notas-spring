@@ -24,7 +24,12 @@
 
             <div class="info-row">
                 <label>Notas (separadas por comas):</label>
-                <input type="number" name="notasString" placeholder="Ej: 5.5, 8.0, 4.2" min="0" max="10" required />
+				<input type="text" 
+				           name="notasString" 
+				           placeholder="Ej: 5.5, 8.0, 4.2" 
+				           pattern="^[0-9.,\s]+$" 
+				           title="Solo se permiten números, puntos, comas y espacios"
+				           required />
             </div>
 
             <div class="acciones">
