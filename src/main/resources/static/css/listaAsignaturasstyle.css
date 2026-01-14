@@ -1,0 +1,118 @@
+/* src/main/resources/static/css/listaAsignaturasstyle.css */
+
+:root {
+    --primary-green: #2e7d32; /* Verde bosque principal */
+    --light-green: #e8f5e9;   /* Fondo verde muy claro */
+    --accent-green: #4caf50;  /* Verde para botones y éxitos */
+    --danger-red: #c62828;    /* Rojo para eliminar/error */
+    --text-main: #2c3e50;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f0f2f0;
+    color: var(--text-main);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 4px; /* Menos redondeado, más clásico */
+    border-top: 5px solid var(--primary-green);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: var(--primary-green);
+    border-bottom: 2px solid var(--light-green);
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Tabla Estilo Clásico Limpio */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+thead {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: var(--light-green);
+}
+
+tr:hover {
+    background-color: #dcedc8;
+}
+
+/* Botones con el estilo original pero mejorados */
+.acciones {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.acciones a, .btn-volver {
+    text-decoration: none;
+    background-color: var(--primary-green);
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.acciones a:hover {
+    background-color: var(--accent-green);
+    transform: translateY(-1px);
+}
+
+.btn-limpiar {
+    background-color: var(--danger-red) !important;
+}
+
+/* Estados */
+.status-yes {
+    color: var(--primary-green);
+    font-weight: bold;
+}
+
+.status-no {
+    color: var(--danger-red);
+    font-weight: bold;
+}
+
+/* Resumen final */
+.footer-stats {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: var(--primary-green);
+    color: white;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+/* Card de detalles */
+.card-detalle {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background: #fff;
+}

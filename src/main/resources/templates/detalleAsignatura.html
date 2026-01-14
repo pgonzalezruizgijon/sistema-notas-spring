@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle | Sistema Escolar</title>
+    <link rel="stylesheet" th:href="@{/css/listaAsignaturasstyle.css}" />
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2 th:text="${asignatura.getNombreMostrar()}">NOMBRE</h2>
+            
+            <div class="info-row">
+                <strong>Resumen:</strong>
+                <span th:text="${asignatura.exportarADetalle()}">Info</span>
+            </div>
+
+            <div class="info-row">
+                <strong>Tipo:</strong>
+                <span th:text="${asignatura instanceof T(com.example.demo.model.Obligatoria) ? 'Obligatoria' : 'Optativa'}"></span>
+            </div>
+
+            <div class="info-row">
+                <strong>Promedio:</strong>
+                <span th:text="${#numbers.formatDecimal(asignatura.obtenerPromedio(), 1, 2)}">0.0</span>
+            </div>
+
+            <div class="info-row">
+                <strong>Estado:</strong>
+                <span th:class="${asignatura.estaAprobado() ? 'status-badge status-aprobado' : 'status-badge status-suspendido'}"
+                      th:text="${asignatura.estaAprobado() ? 'Aprobado' : 'Suspendido'}">
+                </span>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <strong>Notas obtenidas:</strong>
+                <ul class="notas-lista">
+                    <li th:each="nota : ${asignatura.notas}" class="nota-item" th:text="${nota}"></li>
+                </ul>
+            </div>
+        </div>
+
+        <a th:href="@{/asignaturas}" class="btn-volver">← Volver al Listado</a>
+    </div>
+</body>
+</html>
